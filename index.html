@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DRIFT</title>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6C3ESE459N"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-6C3ESE459N');
+</script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Mono:wght@400;700&display=swap');
 
@@ -782,11 +790,23 @@ function submitGuess() {
     guesses.push({ word: guessWord, letters: feedback });
     updateKeyboard();
 
+    // GA4: guess event
+    gtag('event', 'guess_made', {
+      guess_number: guesses.length,
+      guess_word: guessWord
+    });
+
     const won = feedback.every(f => f.status === 'correct');
     if (won) {
       gameOver = true;
       updateDriftLog({ drifted: false });
       updateStatusBar(); updatePinMeter();
+      // GA4: win event
+      gtag('event', 'game_won', {
+        guesses_taken: guesses.length,
+        total_drifts: driftCount,
+        final_word: targetWord
+      });
       showEndPanel(true); return;
     }
 
@@ -797,9 +817,24 @@ function submitGuess() {
     if (driftResult.drifted) {
       triggerDriftTremor(rowIdx);
       updateKeyboard(); // recomputes against new target automatically
+      // GA4: drift event
+      gtag('event', 'drift_occurred', {
+        drift_number: driftCount,
+        position_changed: driftResult.position,
+        guess_number: guesses.length,
+        new_word: targetWord
+      });
     }
 
-    if (guesses.length >= MAX_GUESSES) { gameOver = true; showEndPanel(false); }
+    if (guesses.length >= MAX_GUESSES) {
+      gameOver = true;
+      // GA4: loss event
+      gtag('event', 'game_lost', {
+        total_drifts: driftCount,
+        final_word: targetWord
+      });
+      showEndPanel(false);
+    }
   });
 }
 
@@ -825,7 +860,6 @@ function showEndPanel(won) {
 
 function initGame() {
   guesses = []; currentGuess = ''; gameOver = false; driftCount = 0; keyStates = {};
-  // Pick only from driftable words for better gameplay (skip anchored islands)
   const driftable = ANSWERS.filter(w => ADJACENCY[w] && ADJACENCY[w].length > 0);
   targetWord = driftable[Math.floor(Math.random() * driftable.length)];
   buildBoard(); buildKeyboard();
@@ -833,6 +867,8 @@ function initGame() {
   document.getElementById('end-panel').classList.remove('visible');
   document.getElementById('anchor-badge').className = 'anchor-badge';
   renderCurrentGuess();
+  // GA4: game start
+  gtag('event', 'game_start');
 }
 
 document.addEventListener('keydown', e => {
