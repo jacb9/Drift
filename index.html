@@ -81,7 +81,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: clamp(4px, 1.2vh, 14px);
+    gap: clamp(4px, 1vh, 12px);
+    justify-content: space-between;
   }
 
   header {
@@ -135,9 +136,22 @@
     to { opacity: 1; transform: translateX(0); }
   }
 
-  .board { display: flex; flex-direction: column; gap: clamp(3px, 0.8vh, 6px); width: 100%; flex: 1; min-height: 0; justify-content: center; }
+  .board {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(3px, 1vw, 5px);
+    width: 100%;
+    flex-shrink: 1;
+    /* Cap board to a sensible height so keyboard is always visible */
+    max-height: min(55vw * 6 / 5, 42vh);
+  }
 
-  .row { display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(3px, 0.8vh, 6px); }
+  .row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: clamp(3px, 1vw, 5px);
+    flex: 1;
+  }
 
   .tile {
     aspect-ratio: 1;
@@ -146,7 +160,7 @@
     justify-content: center;
     font-family: 'Space Mono', monospace;
     font-weight: 700;
-    font-size: clamp(14px, 2.8vh, 22px);
+    font-size: clamp(12px, 4.5vw, 20px);
     letter-spacing: 0.05em;
     border: 1px solid var(--tile-border);
     background: var(--tile-empty);
@@ -186,15 +200,15 @@
   }
   .tile.flip { animation: flip 0.4s ease forwards; }
 
-  .keyboard { width: 100%; display: flex; flex-direction: column; gap: clamp(3px, 0.8vh, 6px); flex-shrink: 0; }
-  .key-row { display: flex; justify-content: center; gap: clamp(3px, 0.6vw, 5px); }
+  .keyboard { width: 100%; display: flex; flex-direction: column; gap: clamp(3px, 0.8vh, 5px); flex-shrink: 0; }
+  .key-row { display: flex; justify-content: center; gap: clamp(2px, 0.8vw, 5px); }
 
   .key {
     font-family: 'Share Tech Mono', monospace;
-    font-size: clamp(11px, 1.6vh, 13px);
+    font-size: clamp(10px, 3vw, 13px);
     letter-spacing: 0.05em;
-    padding: clamp(8px, 1.4vh, 12px) clamp(5px, 1vw, 8px);
-    min-width: clamp(28px, 8vw, 34px);
+    padding: clamp(7px, 1.8vh, 12px) clamp(4px, 1.2vw, 8px);
+    min-width: clamp(26px, 8.5vw, 34px);
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text);
