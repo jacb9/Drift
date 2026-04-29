@@ -33,13 +33,13 @@
     background: var(--bg);
     color: var(--text);
     font-family: 'Share Tech Mono', monospace;
-    min-height: 100vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 24px 16px 40px;
+    padding: 8px 12px 8px;
     position: relative;
-    overflow-x: hidden;
+    overflow: hidden;
   }
 
   body::before {
@@ -69,10 +69,11 @@
     z-index: 2;
     width: 100%;
     max-width: 420px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: clamp(4px, 1.2vh, 14px);
   }
 
   header {
@@ -80,22 +81,23 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
-    padding-bottom: 16px;
+    gap: 3px;
+    padding-bottom: clamp(6px, 1vh, 12px);
     border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
   }
 
   .title {
     font-family: 'Space Mono', monospace;
     font-weight: 700;
-    font-size: 28px;
+    font-size: clamp(18px, 4vh, 28px);
     letter-spacing: 0.3em;
     color: var(--text);
     text-shadow: 0 0 20px rgba(200,205,210,0.15);
   }
 
   .subtitle {
-    font-size: 11px;
+    font-size: clamp(9px, 1.2vh, 11px);
     letter-spacing: 0.15em;
     color: var(--text-dim);
     text-transform: uppercase;
@@ -103,16 +105,17 @@
 
   .drift-log {
     width: 100%;
-    min-height: 28px;
+    min-height: 24px;
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 6px 10px;
+    padding: 4px 10px;
     background: var(--surface);
     border: 1px solid var(--border);
-    font-size: 11px;
+    font-size: clamp(9px, 1.2vh, 11px);
     letter-spacing: 0.1em;
     color: var(--text-dim);
+    flex-shrink: 0;
   }
 
   .drift-log-label { color: var(--text-dim); text-transform: uppercase; flex-shrink: 0; }
@@ -124,9 +127,9 @@
     to { opacity: 1; transform: translateX(0); }
   }
 
-  .board { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+  .board { display: flex; flex-direction: column; gap: clamp(3px, 0.8vh, 6px); width: 100%; flex: 1; min-height: 0; justify-content: center; }
 
-  .row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .row { display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(3px, 0.8vh, 6px); }
 
   .tile {
     aspect-ratio: 1;
@@ -135,7 +138,7 @@
     justify-content: center;
     font-family: 'Space Mono', monospace;
     font-weight: 700;
-    font-size: 20px;
+    font-size: clamp(14px, 2.8vh, 22px);
     letter-spacing: 0.05em;
     border: 1px solid var(--tile-border);
     background: var(--tile-empty);
@@ -175,15 +178,15 @@
   }
   .tile.flip { animation: flip 0.4s ease forwards; }
 
-  .keyboard { width: 100%; display: flex; flex-direction: column; gap: 6px; }
-  .key-row { display: flex; justify-content: center; gap: 5px; }
+  .keyboard { width: 100%; display: flex; flex-direction: column; gap: clamp(3px, 0.8vh, 6px); flex-shrink: 0; }
+  .key-row { display: flex; justify-content: center; gap: clamp(3px, 0.6vw, 5px); }
 
   .key {
     font-family: 'Share Tech Mono', monospace;
-    font-size: 13px;
+    font-size: clamp(11px, 1.6vh, 13px);
     letter-spacing: 0.05em;
-    padding: 12px 8px;
-    min-width: 34px;
+    padding: clamp(8px, 1.4vh, 12px) clamp(5px, 1vw, 8px);
+    min-width: clamp(28px, 8vw, 34px);
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text);
@@ -205,21 +208,23 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    font-size: 11px;
+    font-size: clamp(9px, 1.2vh, 11px);
     letter-spacing: 0.1em;
     color: var(--text-dim);
     padding: 0 2px;
+    flex-shrink: 0;
   }
   .status-bar span { text-transform: uppercase; }
 
   .message {
-    font-size: 13px;
+    font-size: clamp(10px, 1.3vh, 13px);
     letter-spacing: 0.12em;
     text-align: center;
-    min-height: 20px;
+    min-height: 16px;
     text-transform: uppercase;
     color: var(--text-dim);
     transition: color 0.3s;
+    flex-shrink: 0;
   }
   .message.win { color: var(--green); }
   .message.lose { color: var(--drift-color); }
@@ -275,9 +280,10 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 11px;
+    font-size: clamp(9px, 1.2vh, 11px);
     letter-spacing: 0.1em;
     color: var(--text-dim);
+    flex-shrink: 0;
   }
   .pin-label { text-transform: uppercase; flex-shrink: 0; }
   .pin-bar { flex: 1; height: 3px; background: var(--border); position: relative; overflow: hidden; }
