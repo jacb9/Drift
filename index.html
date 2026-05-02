@@ -12,30 +12,27 @@
   gtag('js', new Date());
   gtag('config', 'G-6C3ESE459N');
 </script>
-
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Mono:wght@400;700&display=swap');
 
   :root {
-    --bg: #080a0c;
-    --surface: #111820;
-    --border: #4a6478;
-    --text: #eef2f6;
-    --text-dim: #98b0c4;
-    --green: #3dba74;
-    --green-dim: #1e5c3a;
-    --green-glow: #3dba7466;
-    --amber: #e8a020;
-    --amber-dim: #6b4a08;
-    --amber-glow: #e8a02066;
-    --tile-empty: #161f2c;
-    --tile-border: #526880;
-    --tile-filled: #1e2d3c;
-    --tile-correct: #0e2e1c;
-    --tile-present: #2a1e08;
-    --tile-absent: #0c1018;
-    --drift-color: #e05050;
-    --drift-glow: #e0505044;
+    --bg: #0a0c0e;
+    --surface: #222c38;
+    --border: #5a6e80;
+    --text: #e8edf2;
+    --text-dim: #a0b0c0;
+    --green: #4a9e6b;
+    --green-glow: #4a9e6b44;
+    --amber: #c8960c;
+    --amber-glow: #c8960c44;
+    --red: #8b3a3a;
+    --tile-empty: #1e2a38;
+    --tile-border: #6a7e90;
+    --tile-filled: #2a3848;
+    --tile-correct: #1a3828;
+    --tile-present: #3a2e10;
+    --tile-absent: #161e28;
+    --drift-color: #b04848;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -48,7 +45,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px 14px;
+    padding: 6px 10px 6px;
     position: relative;
     overflow: hidden;
   }
@@ -57,7 +54,9 @@
     content: '';
     position: fixed;
     inset: 0;
-    background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, rgba(0,0,0,0.5) 100%);
+    background: 
+      radial-gradient(ellipse 60% 40% at 50% 0%, #0d1a1244 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 100% 100%, #1a0d0d22 0%, transparent 60%);
     pointer-events: none;
     z-index: 0;
   }
@@ -66,8 +65,8 @@
     position: fixed;
     inset: 0;
     background: repeating-linear-gradient(
-      0deg, transparent, transparent 3px,
-      rgba(0,0,0,0.06) 3px, rgba(0,0,0,0.06) 4px
+      0deg, transparent, transparent 2px,
+      rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px
     );
     pointer-events: none;
     z-index: 1;
@@ -77,12 +76,12 @@
     position: relative;
     z-index: 2;
     width: 100%;
-    max-width: 440px;
+    max-width: 420px;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 6px;
     overflow: hidden;
   }
 
@@ -91,8 +90,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    padding-bottom: 10px;
+    gap: 2px;
+    padding-bottom: 6px;
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
     position: relative;
@@ -101,88 +100,58 @@
   .title {
     font-family: 'Space Mono', monospace;
     font-weight: 700;
-    font-size: 30px;
-    letter-spacing: 0.35em;
+    font-size: clamp(16px, 5vw, 26px);
+    letter-spacing: 0.3em;
     color: var(--text);
-    text-shadow: 0 0 30px rgba(238,242,246,0.2), 0 0 60px rgba(238,242,246,0.05);
+    text-shadow: 0 0 20px rgba(200,205,210,0.15);
   }
 
   .subtitle {
     font-size: 10px;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.15em;
     color: var(--text-dim);
     text-transform: uppercase;
   }
 
-  .status-bar {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    color: var(--text-dim);
-    flex-shrink: 0;
-  }
-  .status-bar span { text-transform: uppercase; }
-
   .drift-log {
     width: 100%;
-    height: 28px;
+    height: 26px;
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 0 12px;
+    padding: 0 10px;
     background: var(--surface);
     border: 1px solid var(--border);
     font-size: 10px;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     color: var(--text-dim);
     flex-shrink: 0;
-    transition: border-color 0.4s, box-shadow 0.4s;
-  }
-
-  .drift-log.flash-drift {
-    border-color: var(--drift-color);
-    box-shadow: 0 0 12px var(--drift-glow), inset 0 0 12px var(--drift-glow);
-  }
-
-  .drift-log.flash-held {
-    border-color: var(--green);
-    box-shadow: 0 0 8px var(--green-glow), inset 0 0 8px var(--green-glow);
   }
 
   .drift-log-label { color: var(--text-dim); text-transform: uppercase; flex-shrink: 0; }
+  .drift-event { color: var(--drift-color); animation: fadeIn 0.4s ease; }
+  .no-drift { color: var(--green); animation: fadeIn 0.4s ease; }
 
-  .drift-event {
-    color: var(--drift-color);
-    text-shadow: 0 0 8px var(--drift-glow);
-    animation: slideIn 0.3s ease;
-  }
-
-  .no-drift {
-    color: var(--green);
-    animation: slideIn 0.3s ease;
-  }
-
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateX(-6px); }
-    to   { opacity: 1; transform: translateX(0); }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-4px); }
+    to { opacity: 1; transform: translateX(0); }
   }
 
   .board {
     display: grid;
     grid-template-rows: repeat(6, 1fr);
-    gap: 5px;
+    gap: 4px;
     width: 100%;
     flex: 1;
     min-height: 0;
-    max-height: min(78vw, 360px);
+    max-height: min(80vw, 340px);
+    align-self: center;
   }
 
   .row {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 5px;
+    gap: 4px;
   }
 
   .tile {
@@ -191,55 +160,38 @@
     justify-content: center;
     font-family: 'Space Mono', monospace;
     font-weight: 700;
-    font-size: clamp(13px, 4vw, 22px);
+    font-size: clamp(12px, 4vw, 20px);
     letter-spacing: 0.05em;
-    border: 2px solid var(--tile-border);
+    border: 1px solid var(--tile-border);
     background: var(--tile-empty);
     color: var(--text);
-    transition: border-color 0.15s, background 0.15s;
+    transition: border-color 0.1s, background 0.1s;
     position: relative;
   }
 
-  .tile.filled { background: var(--tile-filled); border-color: #607890; }
-
+  .tile.filled { background: var(--tile-filled); border-color: var(--tile-border); }
   .tile.correct {
-    background: var(--tile-correct);
-    border-color: var(--green);
-    color: var(--green);
-    box-shadow: inset 0 0 16px var(--green-glow), 0 0 10px var(--green-glow);
-    text-shadow: 0 0 8px var(--green-glow);
+    background: var(--tile-correct); border-color: var(--green); color: var(--green);
+    box-shadow: inset 0 0 12px var(--green-glow), 0 0 8px var(--green-glow);
   }
-
   .tile.present {
-    background: var(--tile-present);
-    border-color: var(--amber);
-    color: var(--amber);
-    box-shadow: inset 0 0 16px var(--amber-glow), 0 0 10px var(--amber-glow);
-    text-shadow: 0 0 8px var(--amber-glow);
+    background: var(--tile-present); border-color: var(--amber); color: var(--amber);
+    box-shadow: inset 0 0 12px var(--amber-glow), 0 0 8px var(--amber-glow);
   }
-
-  .tile.absent {
-    background: var(--tile-absent);
-    border-color: #1a2530;
-    color: #3a4e60;
-  }
-
-  .tile.current-input {
-    border-color: #8aaabf;
-    background: var(--tile-filled);
-  }
+  .tile.absent { background: var(--tile-absent); border-color: var(--border); color: var(--text-dim); }
+  .tile.current-input { border-color: #4a5560; }
 
   @keyframes tremor {
     0%   { transform: translateX(0); }
-    10%  { transform: translateX(-4px); }
-    25%  { transform: translateX(4px); }
-    40%  { transform: translateX(-3px); }
-    55%  { transform: translateX(3px); }
-    70%  { transform: translateX(-2px); }
-    85%  { transform: translateX(1px); }
+    15%  { transform: translateX(-3px); }
+    30%  { transform: translateX(3px); }
+    45%  { transform: translateX(-2px); }
+    60%  { transform: translateX(2px); }
+    75%  { transform: translateX(-1px); }
+    90%  { transform: translateX(1px); }
     100% { transform: translateX(0); }
   }
-  .row.drifted { animation: tremor 0.6s ease; }
+  .row.drifted { animation: tremor 0.5s ease; }
 
   @keyframes flip {
     0%   { transform: rotateX(0deg); }
@@ -248,68 +200,21 @@
   }
   .tile.flip { animation: flip 0.4s ease forwards; }
 
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    20% { transform: translateX(-6px); }
-    40% { transform: translateX(6px); }
-    60% { transform: translateX(-4px); }
-    80% { transform: translateX(4px); }
-  }
-  .row.shake { animation: shake 0.4s ease; }
-
-  .pin-meter {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    color: var(--text-dim);
-    flex-shrink: 0;
-  }
-  .pin-label { text-transform: uppercase; flex-shrink: 0; }
-  .pin-bar { flex: 1; height: 2px; background: var(--border); position: relative; overflow: hidden; }
-  .pin-fill { height: 100%; background: var(--green); transition: width 0.6s ease; box-shadow: 0 0 8px var(--green-glow); }
-  .pin-value { min-width: 28px; text-align: right; flex-shrink: 0; }
-
-  .anchor-badge {
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    padding: 2px 6px;
-    border: 1px solid var(--border);
-    display: none;
-  }
-  .anchor-badge.visible { display: block; }
-
-  .message {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-align: center;
-    height: 14px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    transition: color 0.3s;
-    flex-shrink: 0;
-  }
-  .message.win { color: var(--green); text-shadow: 0 0 8px var(--green-glow); }
-  .message.lose { color: var(--drift-color); }
-
-  .keyboard { width: 100%; display: flex; flex-direction: column; gap: 5px; flex-shrink: 0; }
+  .keyboard { width: 100%; display: flex; flex-direction: column; gap: 4px; flex-shrink: 0; }
   .key-row { display: flex; justify-content: center; gap: 4px; }
 
   .key {
     font-family: 'Share Tech Mono', monospace;
-    font-size: 13px;
+    font-size: clamp(10px, 3vw, 13px);
     letter-spacing: 0.05em;
-    height: 44px;
-    min-width: 34px;
+    height: clamp(36px, 5.5vh, 48px);
+    min-width: clamp(26px, 8.5vw, 34px);
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text);
     cursor: pointer;
-    transition: all 0.12s;
+    transition: all 0.15s;
+    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -317,72 +222,165 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  .key:hover { border-color: #4a6070; background: #1a2530; }
-  .key:active { transform: scale(0.92); }
-  .key.wide { min-width: 52px; font-size: 11px; }
+  /* Desktop defaults */
+  .container { gap: 14px; }
+  header { padding-bottom: 14px; gap: 6px; }
+  .title { font-size: 28px; }
+  .subtitle { font-size: 11px; }
+  .drift-log { height: auto; min-height: 30px; padding: 6px 10px; font-size: 11px; }
+  .status-bar { font-size: 11px; }
+  .board { max-height: none; gap: 6px; }
+  .row { gap: 6px; }
+  .tile { font-size: 20px; }
+  .keyboard { gap: 6px; }
+  .key-row { gap: 5px; }
+  .key { height: auto; padding: 12px 8px; min-width: 34px; font-size: 13px; }
+  .key.wide { min-width: 54px; font-size: 11px; }
+  .pin-meter { font-size: 11px; }
+  .message { font-size: 13px; height: auto; min-height: 18px; }
 
-  .key.correct {
-    background: var(--tile-correct);
-    border-color: var(--green);
-    color: var(--green);
-    box-shadow: 0 0 8px var(--green-glow);
+  /* Mobile */
+  @media (max-width: 500px) {
+    .container { gap: 5px; }
+    header { padding-bottom: 5px; gap: 2px; }
+    .title { font-size: clamp(16px, 5vw, 22px); }
+    .subtitle { font-size: 9px; }
+    .drift-log { height: 24px; min-height: unset; padding: 0 8px; font-size: 9px; }
+    .status-bar { font-size: 9px; }
+    .board { max-height: min(80vw, 300px); gap: 3px; }
+    .row { gap: 3px; }
+    .tile { font-size: clamp(11px, 3.8vw, 16px); }
+    .keyboard { gap: 3px; }
+    .key-row { gap: 3px; }
+    .key { height: clamp(34px, 5vh, 44px); min-width: clamp(24px, 8vw, 32px); font-size: clamp(9px, 2.8vw, 12px); padding: 0; }
+    .key.wide { min-width: clamp(44px, 13vw, 54px); font-size: clamp(8px, 2.4vw, 11px); }
+    .pin-meter { font-size: 9px; }
+    .message { font-size: 9px; min-height: 12px; }
   }
-  .key.present {
-    background: var(--tile-present);
-    border-color: var(--amber);
-    color: var(--amber);
+
+  .key.correct { background: var(--tile-correct); border-color: var(--green); color: var(--green); }
+  .key.present { background: var(--tile-present); border-color: var(--amber); color: var(--amber); }
+  .key.absent { background: var(--tile-absent); border-color: var(--border); color: var(--text-dim); }
+
+  .status-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    padding: 0 2px;
+    flex-shrink: 0;
   }
-  .key.absent {
-    background: var(--tile-absent);
-    border-color: #1a2530;
-    color: #3a4e60;
+  .status-bar span { text-transform: uppercase; }
+
+  .message {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-align: center;
+    height: 14px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    transition: color 0.3s;
+    flex-shrink: 0;
   }
+  .message.win { color: var(--green); }
+  .message.lose { color: var(--drift-color); }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-5px); }
+    40% { transform: translateX(5px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(3px); }
+  }
+  .row.shake { animation: shake 0.4s ease; }
 
   .end-panel {
     display: none;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
-    padding: 24px 20px;
+    gap: 12px;
+    padding: 20px;
     background: var(--surface);
     border: 1px solid var(--border);
     width: 100%;
-    flex-shrink: 0;
   }
   .end-panel.visible { display: flex; }
 
   .end-word {
     font-family: 'Space Mono', monospace;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 700;
-    letter-spacing: 0.35em;
+    letter-spacing: 0.3em;
   }
-  .end-word.win { color: var(--green); text-shadow: 0 0 20px var(--green-glow); }
-  .end-word.lose { color: var(--drift-color); text-shadow: 0 0 20px var(--drift-glow); }
+  .end-word.win { color: var(--green); }
+  .end-word.lose { color: var(--drift-color); }
 
-  .end-label { font-size: 10px; letter-spacing: 0.18em; color: var(--text-dim); text-transform: uppercase; }
+  .end-label { font-size: 11px; letter-spacing: 0.15em; color: var(--text-dim); text-transform: uppercase; }
+
+  .end-buttons { display: flex; gap: 10px; justify-content: center; }
 
   .btn-restart {
     font-family: 'Share Tech Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.25em;
+    font-size: 12px;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    padding: 10px 32px;
+    padding: 10px 28px;
     background: transparent;
     border: 1px solid var(--text-dim);
     color: var(--text);
     cursor: pointer;
     transition: all 0.2s;
-    margin-top: 4px;
   }
-  .btn-restart:hover { border-color: var(--text); box-shadow: 0 0 16px rgba(238,242,246,0.12); }
+  .btn-restart:hover { border-color: var(--text); color: #fff; box-shadow: 0 0 12px rgba(200,205,210,0.1); }
+
+  .btn-stats {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 10px 28px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-stats:hover { border-color: var(--text-dim); color: var(--text); }
+
+  .pin-meter {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    flex-shrink: 0;
+  }
+  .pin-label { text-transform: uppercase; flex-shrink: 0; }
+  .pin-bar { flex: 1; height: 3px; background: var(--border); position: relative; overflow: hidden; }
+  .pin-fill { height: 100%; background: var(--green); transition: width 0.5s ease; box-shadow: 0 0 6px var(--green-glow); }
+  .pin-value { min-width: 28px; text-align: right; flex-shrink: 0; }
+
+  .anchor-badge {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid var(--border);
+    display: none;
+  }
+  .anchor-badge.visible { display: block; }
 
   .help-btn {
     position: absolute;
     top: 0;
     right: 0;
     font-family: 'Share Tech Mono', monospace;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.15em;
     color: var(--text-dim);
     background: transparent;
@@ -398,7 +396,7 @@
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.85);
+    background: rgba(0,0,0,0.75);
     z-index: 100;
     align-items: center;
     justify-content: center;
@@ -407,7 +405,7 @@
   .modal-overlay.visible { display: flex; }
 
   .modal {
-    background: #111820;
+    background: var(--surface);
     border: 1px solid var(--border);
     width: 100%;
     max-width: 420px;
@@ -416,15 +414,15 @@
     padding: 28px 24px;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 20px;
     position: relative;
   }
 
   .modal-title {
     font-family: 'Space Mono', monospace;
     font-weight: 700;
-    font-size: 15px;
-    letter-spacing: 0.3em;
+    font-size: 16px;
+    letter-spacing: 0.25em;
     color: var(--text);
     text-transform: uppercase;
   }
@@ -434,7 +432,7 @@
     top: 16px;
     right: 16px;
     font-family: 'Share Tech Mono', monospace;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.15em;
     color: var(--text-dim);
     background: transparent;
@@ -446,44 +444,62 @@
   }
   .modal-close:hover { color: var(--text); border-color: var(--text-dim); }
 
-  .faq-section { display: flex; flex-direction: column; gap: 8px; }
-  .faq-q { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); }
-  .faq-a { font-size: 12px; letter-spacing: 0.04em; color: var(--text-dim); line-height: 1.8; }
-  .faq-divider { height: 1px; background: var(--border); }
+  .faq-section { display: flex; flex-direction: column; gap: 10px; }
+  .faq-q { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); margin-bottom: 2px; }
+  .faq-a { font-size: 12px; letter-spacing: 0.06em; color: var(--text-dim); line-height: 1.7; }
+  .faq-divider { height: 1px; background: var(--border); width: 100%; }
 
   .faq-swatch {
     display: inline-block;
     width: 10px;
     height: 10px;
     border: 1px solid;
-    margin-right: 5px;
+    margin-right: 4px;
     vertical-align: middle;
     position: relative;
     top: -1px;
   }
   .faq-swatch.green { background: var(--tile-correct); border-color: var(--green); }
   .faq-swatch.amber { background: var(--tile-present); border-color: var(--amber); }
-  .faq-swatch.grey  { background: #1e2830; border-color: #3a5060; }
+  .faq-swatch.grey  { background: #1e2830; border-color: #3a4550; }
 
-  /* ── MOBILE ─────────────────────────────────────────────── */
-  @media (max-width: 500px) {
-    body { padding: 6px 10px; }
-    .container { gap: 5px; }
-    header { padding-bottom: 5px; gap: 2px; }
-    .title { font-size: clamp(18px, 6vw, 24px); }
-    .subtitle { font-size: 9px; }
-    .drift-log { height: 22px; font-size: 9px; padding: 0 8px; }
-    .status-bar { font-size: 9px; }
-    .board { max-height: min(76vw, 300px); gap: 3px; }
-    .row { gap: 3px; }
-    .tile { font-size: clamp(11px, 3.8vw, 16px); }
-    .keyboard { gap: 3px; }
-    .key-row { gap: 3px; }
-    .key { height: clamp(32px, 5.5vh, 42px); min-width: clamp(24px, 8.5vw, 32px); font-size: clamp(9px, 3vw, 12px); }
-    .key.wide { min-width: clamp(42px, 14vw, 52px); font-size: clamp(8px, 2.5vw, 10px); }
-    .pin-meter { font-size: 9px; }
-    .message { font-size: 9px; }
+  /* Stats modal styles */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    width: 100%;
   }
+  .stat-block { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .stat-value { font-family: 'Space Mono', monospace; font-size: 28px; font-weight: 700; color: var(--text); line-height: 1; }
+  .stat-label { font-size: 9px; letter-spacing: 0.15em; color: var(--text-dim); text-transform: uppercase; text-align: center; }
+  .stats-section-label { font-size: 11px; letter-spacing: 0.15em; color: var(--text-dim); text-transform: uppercase; }
+  .dist-bars { display: flex; flex-direction: column; gap: 4px; width: 100%; }
+  .dist-row { display: flex; align-items: center; gap: 8px; font-size: 11px; font-family: 'Share Tech Mono', monospace; }
+  .dist-num { width: 12px; color: var(--text-dim); flex-shrink: 0; text-align: right; }
+  .dist-bar-wrap { flex: 1; height: 16px; background: var(--border); position: relative; }
+  .dist-bar-fill { height: 100%; background: var(--green); transition: width 0.6s ease; min-width: 2px; }
+  .dist-bar-fill.current { background: var(--amber); }
+  .dist-count { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); font-size: 10px; color: var(--bg); font-family: 'Share Tech Mono', monospace; }
+  .dist-count.outside { position: static; transform: none; color: var(--text-dim); margin-left: 4px; }
+  .drift-stats-grid { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+  .drift-stat-row { display: flex; justify-content: space-between; align-items: center; font-size: 11px; }
+  .drift-stat-label { color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; font-size: 10px; }
+  .drift-stat-value { font-family: 'Space Mono', monospace; color: var(--text); font-size: 13px; }
+  .btn-reset-stats {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+    align-self: center;
+  }
+  .btn-reset-stats:hover { border-color: var(--drift-color); color: var(--drift-color); }
 </style>
 </head>
 <body>
@@ -501,21 +517,16 @@
     <div class="modal">
       <div class="modal-title">How to play</div>
       <button class="modal-close" onclick="document.getElementById('faq-modal').classList.remove('visible')">close</button>
-
       <div class="faq-section">
         <div class="faq-q">What is Drift?</div>
         <div class="faq-a">Drift is a word-guessing game like Wordle — with one difference. The hidden word is alive. After each guess, it may shift one letter to escape you. You have 6 guesses to pin it down before it gets away.</div>
       </div>
-
       <div class="faq-divider"></div>
-
       <div class="faq-section">
         <div class="faq-q">Basic rules</div>
         <div class="faq-a">Guess a valid 5-letter word. After each guess you get colour feedback, then the word may drift. You win by getting all five letters correct on the same guess — before the word escapes.</div>
       </div>
-
       <div class="faq-divider"></div>
-
       <div class="faq-section">
         <div class="faq-q">What do the colours mean?</div>
         <div class="faq-a">
@@ -524,49 +535,63 @@
           <span class="faq-swatch grey"></span>Grey — letter is not in the word.
         </div>
       </div>
-
       <div class="faq-divider"></div>
-
       <div class="faq-section">
         <div class="faq-q">How does drifting work?</div>
         <div class="faq-a">After you guess, the word looks for a neighbouring word — one letter different — that undoes your progress. It prefers moves that break your green letters or remove your yellow letters. If it finds a good escape route, it takes it. The drift log tells you whether the word moved, and if so, which position changed.</div>
       </div>
-
       <div class="faq-divider"></div>
-
       <div class="faq-section">
         <div class="faq-q">What happens to the board when the word drifts?</div>
         <div class="faq-a">The board is frozen history — it always shows the feedback you received at the time of each guess, against whatever the word was then. It does not update after a drift. Use it as an audit trail of what you learned.</div>
       </div>
-
       <div class="faq-divider"></div>
-
       <div class="faq-section">
         <div class="faq-q">What happens to the keyboard when the word drifts?</div>
         <div class="faq-a">The keyboard updates immediately to reflect the current word. It replays all your past guesses against the new target and shows what they would mean now. A letter that was green may go grey. A letter that was grey may come back as yellow or green. The keyboard is live intelligence — the board is history.</div>
       </div>
-
       <div class="faq-divider"></div>
-
       <div class="faq-section">
         <div class="faq-q">What is the PIN meter?</div>
         <div class="faq-a">PIN shows the percentage of positions you have locked down with confirmed green letters across all your guesses. A higher pin score means the word has fewer escape routes. At 100% you have the word cornered — but it may still drift one last time if it can.</div>
       </div>
-
       <div class="faq-divider"></div>
-
       <div class="faq-section">
         <div class="faq-q">Does the word always drift?</div>
         <div class="faq-a">No. The word only drifts when it can find a neighbour that genuinely improves its position — breaking a green or removing a yellow. Early guesses with no hits give it nothing to escape from. As you close in, it gets more desperate. Late in the game the drift probability drops slightly, but a cornered word is still dangerous.</div>
       </div>
-
       <div class="faq-divider"></div>
-
       <div class="faq-section">
         <div class="faq-q">Strategy tips</div>
         <div class="faq-a">Watch the keyboard after every drift, not just the board. A letter that resurrects from grey is a free clue. Prioritise locking multiple positions at once — the word can only change one letter per drift, so two or three confirmed greens in the same guess are hard to escape simultaneously. The drift log tells you which position moved — combined with the keyboard, you can often deduce the new letter.</div>
       </div>
+    </div>
+  </div>
 
+  <!-- Stats Modal -->
+  <div class="modal-overlay" id="stats-modal" onclick="if(event.target===this)this.classList.remove('visible')">
+    <div class="modal">
+      <div class="modal-title">Stats</div>
+      <button class="modal-close" onclick="document.getElementById('stats-modal').classList.remove('visible')">close</button>
+      <div class="stats-grid">
+        <div class="stat-block"><div class="stat-value" id="stat-played">0</div><div class="stat-label">played</div></div>
+        <div class="stat-block"><div class="stat-value" id="stat-winpct">0</div><div class="stat-label">win %</div></div>
+        <div class="stat-block"><div class="stat-value" id="stat-streak">0</div><div class="stat-label">streak</div></div>
+        <div class="stat-block"><div class="stat-value" id="stat-best">0</div><div class="stat-label">best</div></div>
+      </div>
+      <div class="faq-divider"></div>
+      <div class="stats-section-label">guess distribution</div>
+      <div class="dist-bars" id="dist-bars"></div>
+      <div class="faq-divider"></div>
+      <div class="stats-section-label">drift stats</div>
+      <div class="drift-stats-grid">
+        <div class="drift-stat-row"><span class="drift-stat-label">avg drifts per game</span><span class="drift-stat-value" id="stat-avg-drifts">—</span></div>
+        <div class="drift-stat-row"><span class="drift-stat-label">won after drift</span><span class="drift-stat-value" id="stat-drift-wins">—</span></div>
+        <div class="drift-stat-row"><span class="drift-stat-label">most drifts survived</span><span class="drift-stat-value" id="stat-max-drifts">—</span></div>
+        <div class="drift-stat-row"><span class="drift-stat-label">escaped near-pins</span><span class="drift-stat-value" id="stat-escapes">—</span></div>
+      </div>
+      <div class="faq-divider"></div>
+      <button class="btn-reset-stats" onclick="confirmResetStats()">reset stats</button>
     </div>
   </div>
 
@@ -595,7 +620,10 @@
     <div class="end-label" id="end-label">—</div>
     <div class="end-word" id="end-word"></div>
     <div class="end-label" id="end-sublabel"></div>
-    <button class="btn-restart" onclick="initGame()">new game</button>
+    <div class="end-buttons">
+      <button class="btn-restart" onclick="initGame()">new game</button>
+      <button class="btn-stats" onclick="openStats()">stats</button>
+    </div>
   </div>
 
   <div class="keyboard" id="keyboard"></div>
@@ -615,6 +643,7 @@ let currentGuess = '';
 let gameOver = false;
 let driftCount = 0;
 let keyStates = {};
+let hadNearPinEscape = false;  // tracks if word escaped when pin >= 60%
 const MAX_GUESSES = 6;
 const WORD_LENGTH = 5;
 
@@ -897,6 +926,7 @@ function submitGuess() {
     if (driftResult.drifted) {
       triggerDriftTremor(rowIdx);
       updateKeyboard(); // recomputes against new target automatically
+      if (computePinScore() >= 0.6) hadNearPinEscape = true;
       // GA4: drift event
       gtag('event', 'drift_occurred', {
         drift_number: driftCount,
@@ -936,10 +966,117 @@ function showEndPanel(won) {
     won ? `pinned in ${guesses.length} guess${guesses.length !== 1 ? 'es' : ''}` : 'the word escaped';
   document.getElementById('end-sublabel').textContent =
     driftCount > 0 ? `word drifted ${driftCount} time${driftCount !== 1 ? 's' : ''}` : 'word never drifted';
+  recordGameResult(won, guesses.length, driftCount, hadNearPinEscape);
 }
 
+// ── STATS ─────────────────────────────────────────────────────────────────────
+const STATS_KEY = 'drift_stats_v1';
+
+function loadStats() {
+  try {
+    return JSON.parse(localStorage.getItem(STATS_KEY)) || defaultStats();
+  } catch { return defaultStats(); }
+}
+
+function defaultStats() {
+  return {
+    gamesPlayed: 0,
+    gamesWon: 0,
+    currentStreak: 0,
+    bestStreak: 0,
+    winDistribution: [0, 0, 0, 0, 0, 0], // index 0 = won in 1 guess
+    totalDrifts: 0,
+    gamesWithDrift: 0,
+    driftGamesWon: 0,
+    maxDriftsInGame: 0,
+    nearPinEscapes: 0  // drifts that occurred when pin >= 60%
+  };
+}
+
+function saveStats(stats) {
+  try { localStorage.setItem(STATS_KEY, JSON.stringify(stats)); } catch {}
+}
+
+function recordGameResult(won, guessCount, drifts, hadNearPinEscape) {
+  const stats = loadStats();
+  stats.gamesPlayed++;
+  stats.totalDrifts += drifts;
+  if (drifts > 0) {
+    stats.gamesWithDrift++;
+    if (won) stats.driftGamesWon++;
+  }
+  if (drifts > stats.maxDriftsInGame) stats.maxDriftsInGame = drifts;
+  if (hadNearPinEscape) stats.nearPinEscapes++;
+  if (won) {
+    stats.gamesWon++;
+    stats.currentStreak++;
+    if (stats.currentStreak > stats.bestStreak) stats.bestStreak = stats.currentStreak;
+    stats.winDistribution[guessCount - 1]++;
+  } else {
+    stats.currentStreak = 0;
+  }
+  saveStats(stats);
+}
+
+function renderStats(currentGuessCount) {
+  const stats = loadStats();
+  document.getElementById('stat-played').textContent = stats.gamesPlayed;
+  document.getElementById('stat-winpct').textContent =
+    stats.gamesPlayed ? Math.round(100 * stats.gamesWon / stats.gamesPlayed) : 0;
+  document.getElementById('stat-streak').textContent = stats.currentStreak;
+  document.getElementById('stat-best').textContent = stats.bestStreak;
+
+  // Distribution bars
+  const maxVal = Math.max(...stats.winDistribution, 1);
+  const barsEl = document.getElementById('dist-bars');
+  barsEl.innerHTML = '';
+  stats.winDistribution.forEach((count, i) => {
+    const isCurrent = currentGuessCount === i + 1;
+    const pct = Math.round((count / maxVal) * 100);
+    const row = document.createElement('div');
+    row.className = 'dist-row';
+    const useOutside = pct < 15;
+    row.innerHTML = `
+      <span class="dist-num">${i + 1}</span>
+      <div class="dist-bar-wrap">
+        <div class="dist-bar-fill${isCurrent ? ' current' : ''}" style="width:${Math.max(pct,3)}%">
+          ${!useOutside ? `<span class="dist-count">${count}</span>` : ''}
+        </div>
+        ${useOutside ? `<span class="dist-count outside">${count}</span>` : ''}
+      </div>`;
+    barsEl.appendChild(row);
+  });
+
+  // Drift stats
+  const avgDrifts = stats.gamesPlayed
+    ? (stats.totalDrifts / stats.gamesPlayed).toFixed(1)
+    : '—';
+  const driftWinPct = stats.gamesWithDrift
+    ? Math.round(100 * stats.driftGamesWon / stats.gamesWithDrift) + '%'
+    : '—';
+  document.getElementById('stat-avg-drifts').textContent = avgDrifts;
+  document.getElementById('stat-drift-wins').textContent = driftWinPct;
+  document.getElementById('stat-max-drifts').textContent =
+    stats.gamesPlayed ? stats.maxDriftsInGame : '—';
+  document.getElementById('stat-escapes').textContent =
+    stats.gamesPlayed ? stats.nearPinEscapes : '—';
+}
+
+function openStats() {
+  renderStats(gameOver ? guesses.length : null);
+  document.getElementById('stats-modal').classList.add('visible');
+}
+
+function confirmResetStats() {
+  if (confirm('Reset all stats? This cannot be undone.')) {
+    saveStats(defaultStats());
+    renderStats(null);
+  }
+}
+
+
 function initGame() {
-  guesses = []; currentGuess = ''; gameOver = false; driftCount = 0; keyStates = {};
+  guesses = []; currentGuess = ''; gameOver = false; driftCount = 0; keyStates = {}; hadNearPinEscape = false;
   const driftable = ANSWERS.filter(w => ADJACENCY[w] && ADJACENCY[w].length > 0);
   targetWord = driftable[Math.floor(Math.random() * driftable.length)];
   buildBoard(); buildKeyboard();
@@ -960,6 +1097,7 @@ document.addEventListener('keydown', e => {
 });
 
 initGame();
+
 </script>
 </body>
 </html>
